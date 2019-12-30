@@ -22,12 +22,9 @@ func TestLogOutput(t *testing.T) {
 			}
 		}
 	}
-
 	str := array[index:]
 	fmt.Println(strings.Trim(string(str), " "))
 	if string(str) != "[  deneme  ]\n" {
-		t.Error("some error my friend")
+		t.Error("LogStatus output syntax it shoul changed")
 	}
-	
-
 }

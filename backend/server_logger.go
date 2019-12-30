@@ -30,8 +30,9 @@ func NewServerLogger(writer io.Writer) *ServerLogger {
 	}
 }
 
-/* Helper function, for printing strings and errors passed to logger methods. */
+//Helper function, for printing strings and errors passed to logger methods.
 func printLog(logger interface{}, msgs []interface{}, isFatal bool) {
+
 	if l, ok := logger.(*log.Logger); ok {
 		for _, m := range msgs {
 			switch msg := m.(type) {
