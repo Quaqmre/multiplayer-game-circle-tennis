@@ -17,7 +17,7 @@ type ServerLogger struct {
 
 //NewServerLogger Create an instance of type ServerLogger.
 func NewServerLogger(writer io.Writer) *ServerLogger {
-	logfile, err := os.OpenFile("log-output.txt", os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
+	logfile, err := os.OpenFile("log-output.log", os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
 	if err != nil {
 		log.Fatalln("Failed to open log file:", err)
 	}
@@ -25,8 +25,8 @@ func NewServerLogger(writer io.Writer) *ServerLogger {
 	return &ServerLogger{
 		status:     log.New(writer, "[INFO] ", log.Ltime),
 		debug:      log.New(writer, "[DEBUG] ", log.Ldate|log.Ltime),
-		warning:    log.New(io.MultiWriter(logfile, writer), "[WARNING] ", log.Ldate|log.Ltime|log.Lshortfile),
-		alertFatal: log.New(io.MultiWriter(logfile, writer), "[ALERT] ", log.Ldate|log.Ltime|log.Lshortfile),
+		warning:    log.New(io.MultiWriter(logfile, writer), "[WARNING] ", log.Ldate|log.Ltime),
+		alertFatal: log.New(io.MultiWriter(logfile, writer), "[ALERT] ", log.Ldate|log.Ltime),
 	}
 }
 
