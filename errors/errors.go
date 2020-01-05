@@ -1,8 +1,4 @@
-// Copyright 2016 The Upspin Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style
-// license that can be found in the LICENSE file.
-
-// Package errors defines the error handling used by all Upspin software.
+// Package errors defines globaly
 package errors
 
 import (
@@ -24,10 +20,8 @@ type Error struct {
 	// User is the
 	User UserName
 	// Op is the operation being performed, usually the name of the method
-	// being invoked (Get, Put, etc.). It should not contain an at sign @.
 	Op Op
 	// Kind is the class of error, such as permission failure,
-	// or "Other" if its class is unknown or irrelevant.
 	Kind Kind
 	// The underlying error that triggered this one, if any.
 	Err error
@@ -46,7 +40,6 @@ var (
 )
 
 // Op describes an operation, usually as the package and method,
-// such as "key/server.Lookup".
 type Op string
 
 // PathName is the gamer lobby name of the item being accessed.
@@ -122,38 +115,7 @@ func (k Kind) String() string {
 	}
 	return "unknown error kind"
 }
-
-// E builds an error value from its arguments.
-// There must be at least one argument or E panics.
-// The type of each argument determines its meaning.
-// If more than one argument of a given type is presented,
-// only the last one is recorded.
-//
-// The types are:
-//	upspin.PathName
-//		The Upspin path name of the item being accessed.
-//	upspin.UserName
-//		The Upspin name of the user attempting the operation.
-//	errors.Op
-//		The operation being performed, usually the method
-//		being invoked (Get, Put, etc.).
-//	string
-//		Treated as an error message and assigned to the
-//		Err field after a call to errors.Str. To avoid a common
-//		class of misuse, if the string contains an @, it will be
-//		treated as a PathName or UserName, as appropriate. Use
-//		errors.Str explicitly to avoid this special-casing.
-//	errors.Kind
-//		The class of error, such as permission failure.
-//	error
-//		The underlying error that triggered this one.
-//
-// If the error is printed, only those items that have been
-// set to non-zero values will appear in the result.
-//
-// If Kind is not specified or Other, we set it to the Kind of
-// the underlying error.
-//
+//E is the builder own error struct ,
 func E(args ...interface{}) error {
 	if len(args) == 0 {
 		panic("call to errors.E with no arguments")
@@ -343,10 +305,7 @@ func MarshalErrorAppend(err error, b []byte) []byte {
 }
 
 // MarshalError marshals an arbitrary error and returns the byte slice.
-// If the error is nil, it returns nil.
-// It returns the argument slice unchanged if the error is nil.
-// If the error is not an *Error, it just records the result of err.Error().
-// Otherwise it encodes the full Error struct.
+// Using for minimal cominicate 
 func MarshalError(err error) []byte {
 	return MarshalErrorAppend(err, nil)
 }
